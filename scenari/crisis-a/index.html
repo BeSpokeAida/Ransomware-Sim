@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberDrill — Crisis A: contenimento PC amministrativo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="badge">INC‑crisis · Meridian · focolaio amministrativo</div>
+      <h1>PC‑ADMIN‑01 · <em>secondo vettore in parallelo al ripristino</em></h1>
+      <p class="lead">
+        Con la bonifica sulla condivisione di <strong>SERVER01‑SHARE</strong> ancora in corso, emergono segnali sull’host
+        <strong>PC‑ADMIN‑01</strong>. La priorità corretta non è mettere tutto sul solo file server: <strong>isolare questo nodo e
+        revocare subito i contesti con privilegio elevati</strong> attenua il rischio di lateralizzazione verso Active Directory mentre
+        prosegue il workstream principale sul ripristino della share.
+      </p>
+      <div class="ticker" id="ticker"></div>
+
+      <svg class="top-svg" id="diag" viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g" x1="0%" y1="0%" x2="100%">
+            <stop offset="0%" stop-color="#3dd68c" stop-opacity="0.2" />
+            <stop offset="100%" stop-color="#e8503a" stop-opacity="0.15" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="420" height="200" fill="url(#g)" opacity="0.35" />
+        <!-- DC -->
+        <rect x="20" y="70" width="88" height="56" rx="6" fill="#161b22" stroke="#333b48" />
+        <text x="64" y="102" fill="#8d96a8" font-size="9" font-family="IBM Plex Mono" text-anchor="middle">DC</text>
+        <!-- ADMIN PC danger -->
+        <rect id="admBox" x="252" y="42" width="100" height="68" rx="8" class="host-danger" />
+        <text x="302" y="78" fill="#f0e0dc" font-size="10" font-family="IBM Plex Mono" text-anchor="middle">PC-ADMIN-01</text>
+        <text x="302" y="93" fill="#c88478" font-size="7.5" font-family="IBM Plex Mono" text-anchor="middle">PRIV BOOTSTRAP</text>
+        <!-- Share server -->
+        <rect x="120" y="120" width="86" height="48" rx="6" fill="#161b22" stroke="#253040" />
+        <text x="163" y="148" fill="#7a8498" font-size="8.5" font-family="IBM Plex Mono" text-anchor="middle">SHARE</text>
+        <path id="f1" class="flow active" d="M 108 118 L 246 118" />
+        <path id="f2" class="flow active" d="M 298 118 L 348 138" opacity="0" />
+        <text x="412" y="105" fill="#6b7385" font-size="8" font-family="IBM Plex Mono" text-anchor="end">percorso elev.</text>
+      </svg>
+
+      <div class="actions">
+        <div class="act">
+          <div>
+            <h3>A1 · Segmentazione host amministrativa</h3>
+            <p>802.1X / drop dinamico VLAN: PC‑ADMIN‑01 non viene più instradato verso la dorsale di SERVER01‑SHARE mentre intervieni dai rack o dalla console NAC.</p>
+          </div>
+          <button type="button" class="a1" id="btnIso">Isola ADMIN-01</button>
+        </div>
+        <div class="act">
+          <div>
+            <h3>A2 · Revoca contesti privilegiati attivi</h3>
+            <p>Revoca delle sessioni con privilegio elevato (RDP/console o equivalenti) correlate al SID sospetto, prima della bonifica delle share — coerente con le procedure Meridian su host amministrativi compromessi.</p>
+          </div>
+          <button type="button" class="a2" id="btnRev" disabled>Revoca privilegi attivi</button>
+        </div>
+      </div>
+      <div class="note" id="note">
+        Finché A1 non risulta eseguito non si procede sugli artefatti del DC dalla stessa vista: trascurare PC‑ADMIN‑01 rallenta comunque il ripristino affidabile sulla share principale.
+      </div>
+    </div>
+
+    <div class="done-layer" id="done">
+      <div class="done-card">
+        <h3>Vettore amministrativo contenuto sul perimetro locale</h3>
+        <p>
+          PC‑ADMIN‑01 è in segmentazione rigida e le sessioni con privilegio elevato considerate correlate risultano revocate nella vista disponibile qui.
+          L’incidente nell’insieme può essere ancora attivo su altri segmenti: restano in agenda rotazione delle credenziali di dominio e verifiche sui segmenti non coperti da questo intervento.
+        </p>
+        <div class="done-actions">
+          <button type="button" class="btn-back-sim" id="btnBack">Chiudi e torna all’incidente</button>
+        </div>
+      </div>
+    </div>
+    <script src="../../backend/cyberdrill-lab-clock.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

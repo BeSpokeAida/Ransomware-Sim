@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #0b0d10;
+  --s1: #13161b;
+  --s2: #1a1e25;
+  --b1: #252b35;
+  --b2: #333b48;
+  --tx: #dde1ea;
+  --mu: #6b7385;
+  --ac: #e8503a;
+  --gr: #3dd68c;
+  --bl: #4a9fe8;
+  --ye: #f0c040;
+  --fn: "IBM Plex Sans", sans-serif;
+  --mo: "IBM Plex Mono", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  min-height: 100%;
+}
+body {
+  font-family: var(--fn);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--tx);
+  background: var(--bg);
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 45% 40% at 80% 15%, rgba(61, 214, 140, 0.07) 0%, transparent 55%);
+  z-index: 0;
+}
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1.75rem 1.2rem 2.8rem;
+}
+.badge {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-family: var(--mo);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gr);
+  padding: 5px 14px;
+  border-radius: 3px;
+  border: 1px solid rgba(61, 214, 140, 0.32);
+  background: rgba(61, 214, 140, 0.08);
+  margin-bottom: 1rem;
+}
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gr);
+}
+h1 {
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  font-weight: 300;
+  margin-bottom: 0.4rem;
+}
+h1 em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--gr);
+}
+.lead {
+  color: var(--mu);
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+}
+.ticker {
+  font-family: var(--mo);
+  font-size: 0.62rem;
+  color: var(--mu);
+  padding: 0.55rem 0.75rem;
+  background: var(--s2);
+  border: 1px solid var(--b1);
+  border-radius: 6px;
+  margin-bottom: 1.35rem;
+}
+.steps {
+  display: flex;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.steps span {
+  font-family: var(--mo);
+  font-size: 0.56rem;
+  letter-spacing: 0.06em;
+  padding: 0.28rem 0.52rem;
+  border-radius: 4px;
+  border: 1px solid var(--b1);
+  color: var(--mu);
+}
+.steps span.done {
+  border-color: rgba(61, 214, 140, 0.4);
+  color: var(--gr);
+}
+.steps span.live {
+  border-color: rgba(74, 159, 232, 0.45);
+  color: var(--bl);
+}
+
+.panel-step {
+  background: var(--s1);
+  border: 1px solid var(--b1);
+  border-radius: 10px;
+  padding: 1.15rem 1.2rem;
+  margin-bottom: 0.95rem;
+  display: none;
+}
+.panel-step.visible {
+  display: block;
+  animation: pop 0.35s ease;
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.panel-step h2 {
+  font-family: var(--mo);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mu);
+  margin-bottom: 0.75rem;
+}
+.panel-step p {
+  font-size: 0.86rem;
+  color: #b8bcc8;
+  margin-bottom: 0.95rem;
+  line-height: 1.5;
+}
+
+.hash-box {
+  font-family: var(--mo);
+  font-size: 0.7rem;
+  color: var(--ye);
+  word-break: break-all;
+  padding: 0.65rem 0.72rem;
+  background: var(--s2);
+  border-radius: 6px;
+  border: 1px dashed var(--b2);
+  margin-bottom: 0.85rem;
+}
+.ring {
+  width: 120px;
+  height: 120px;
+  margin: 0.5rem auto 1rem;
+  position: relative;
+}
+.ring svg {
+  transform: rotate(-90deg);
+}
+.ring-bg {
+  fill: none;
+  stroke: var(--b1);
+  stroke-width: 8;
+}
+.ring-fg {
+  fill: none;
+  stroke: var(--bl);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 0.3s linear;
+}
+.ring-fg.ready {
+  stroke: var(--gr);
+}
+.ring-lbl {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--mo);
+  font-size: 1rem;
+  font-weight: 600;
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+.btn {
+  font-family: var(--fn);
+  font-weight: 500;
+  font-size: 0.86rem;
+  border-radius: 7px;
+  padding: 0.58rem 1.05rem;
+  cursor: pointer;
+  border: 1px solid var(--b2);
+  background: var(--s2);
+  color: var(--tx);
+}
+.btn.primary {
+  background: var(--bl);
+  border-color: transparent;
+  color: #fff;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.chk-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 0.65rem;
+  font-size: 0.84rem;
+}
+.chk-line input {
+  margin-top: 3px;
+  accent-color: var(--gr);
+}
+.step-note {
+  font-size: 0.74rem;
+  color: var(--mu);
+  font-family: var(--mo);
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+.done-layer {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 7, 9, 0.9);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+.done-layer.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.done-card {
+  max-width: 460px;
+  background: var(--s1);
+  border: 1px solid var(--b1);
+  border-radius: 12px;
+  padding: 1.45rem;
+}
+.done-card h3 {
+  font-size: 1.03rem;
+  color: var(--gr);
+  margin-bottom: 0.6rem;
+}
+.done-card p,
+.done-card ul {
+  font-size: 0.86rem;
+  color: #aeb4c6;
+}
+.done-card ul {
+  margin-top: 0.5rem;
+  padding-left: 1.05rem;
+}
+.done-actions {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}

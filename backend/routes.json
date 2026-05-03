@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "returnDelayMs": 2000,
+  "labs": {
+    "sc2": {
+      "path": "scenari/sc2/index.html",
+      "event": "cyberdrill-sc2-complete"
+    },
+    "sc4": {
+      "path": "scenari/sc4/index.html",
+      "event": "cyberdrill-sc4-complete"
+    },
+    "sc7": {
+      "path": "scenari/sc7/index.html",
+      "event": "cyberdrill-sc7-complete"
+    },
+    "sc7.netChaos": {
+      "path": "scenari/sc7/index.html",
+      "event": "cyberdrill-sc7-complete"
+    },
+    "sc10": {
+      "path": "scenari/sc10/index.html",
+      "event": "cyberdrill-sc10-complete"
+    },
+    "sc11": {
+      "path": "scenari/sc11/index.html",
+      "event": "cyberdrill-sc11-complete"
+    },
+    "crisisA": {
+      "path": "scenari/crisis-a/index.html",
+      "event": "cyberdrill-crisis-a-complete"
+    },
+    "crisisC": {
+      "path": "scenari/crisis-c/index.html",
+      "event": "cyberdrill-crisis-c-complete"
+    }
+  }
+}

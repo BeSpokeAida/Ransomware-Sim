@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberDrill — SC2: contenimento SERVER01‑SHARE</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="badge">INC‑2024‑0312 · Meridian Components · contenimento locale</div>
+      <h1>Nodo SERVER01‑SHARE · <em>isolamento segmento VLAN‑12</em></h1>
+      <p class="lead">
+        Scollega le due NIC di <strong>SERVER01‑SHARE</strong> dalla dorsale applicativa e, sullo switch di confine, applica il taglio VLAN
+        sull’uplink del segmento. Qui agisci solo su <strong>questo tratto</strong>: sul resto della LAN l’incidente resta in gestione dai team
+        sulla console principale — questa azione non chiude l’emergenza.
+      </p>
+
+      <div class="ticker" id="ticker" aria-live="polite"></div>
+
+      <div class="threat-strip" id="strip">
+        <div class="th-seg local" id="segLocal">
+          <span>QUESTO NODO</span>
+          <strong>SERVER01‑SHARE</strong>
+          <span style="color:var(--ye);margin-top:4px;display:block;font-size:.55rem;">mitigabile da qui</span>
+        </div>
+        <div class="th-seg warn" id="segB">
+          <span>Altri host VLAN</span>
+          <strong>Workstation</strong>
+          <span style="color:var(--ac);margin-top:4px;display:block;font-size:.55rem;">attività non mitigata</span>
+        </div>
+        <div class="th-seg warn" id="segC">
+          <span>Rotta nord</span>
+          <strong>ERP / WAN</strong>
+          <span style="color:var(--ac);margin-top:4px;display:block;font-size:.55rem;">traffico sotto pressione</span>
+        </div>
+      </div>
+
+      <div class="grid-panels">
+        <!-- Fase A -->
+        <section class="panel" id="panelRack" aria-labelledby="titRack">
+          <h2 id="titRack">1 · Scollegamento fisico NIC</h2>
+          <div class="rack-face">
+            <div class="srv-label">SERVER01‑SHARE <span>| Condivisione file · trunk VLAN‑12</span></div>
+            <div class="jack-row">
+              <div class="jack-unit" id="jack1" data-jack="1">
+                <div class="jack-face">
+                  <div class="rj-slot">
+                    <span class="led-ring" aria-hidden="true"></span>
+                  </div>
+                  <div style="flex:1">
+                    <div style="font-family:var(--mo);font-size:.68rem;color:var(--tx);">NIC-TRUNK-A</div>
+                    <div class="j-hint">Trascina il connettore verso il basso</div>
+                  </div>
+                </div>
+                <div class="cable-track" data-max-y="92">
+                  <svg class="cable-svg" viewBox="0 0 200 72" preserveAspectRatio="none">
+                    <path class="cable-path" id="path1"></path>
+                    <path class="cable-highlight" id="hilite1"></path>
+                  </svg>
+                  <div class="plug" role="slider" tabindex="0" aria-label="Scollega cavo NIC-TRUNK-A" aria-valuemin="0" aria-valuemax="92" aria-valuenow="0"></div>
+                </div>
+              </div>
+
+              <div class="jack-unit" id="jack2" data-jack="2">
+                <div class="jack-face">
+                  <div class="rj-slot">
+                    <span class="led-ring" aria-hidden="true"></span>
+                  </div>
+                  <div style="flex:1">
+                    <div style="font-family:var(--mo);font-size:.68rem;color:var(--tx);">NIC-ACCESS-B</div>
+                    <div class="j-hint">Trascina il connettore verso il basso</div>
+                  </div>
+                </div>
+                <div class="cable-track" data-max-y="92">
+                  <svg class="cable-svg" viewBox="0 0 200 72" preserveAspectRatio="none">
+                    <path class="cable-path" id="path2"></path>
+                    <path class="cable-highlight" id="hilite2"></path>
+                  </svg>
+                  <div class="plug" role="slider" tabindex="0" aria-label="Scollega cavo NIC-ACCESS-B" aria-valuemin="0" aria-valuemax="92" aria-valuenow="0"></div>
+                </div>
+              </div>
+            </div>
+            <div class="packet-lane" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <!-- Fase B -->
+        <section class="panel panel-dim" id="panelSw" aria-labelledby="titSw">
+          <div class="lock-hint">Completa prima lo scollegamento fisico delle due NIC</div>
+          <h2 id="titSw">2 · ACL sul segmento allo switch CORE‑EDGE</h2>
+          <div class="sw-chassis">
+            <div class="sw-brand">MERIDIAN · STK2 · Ports 09–18</div>
+            <div class="port-row" id="portRow"></div>
+            <div class="sw-action">
+              <button type="button" class="btn-strip" id="btnIsolate" disabled>
+                Applica isolamento VLAN‑12 · SERVER01‑SHARE
+              </button>
+            </div>
+            <div class="packet-lane" aria-hidden="true"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="done-layer" id="doneLayer" aria-hidden="true">
+      <div class="done-card" role="dialog" aria-labelledby="doneTitle">
+        <h3 id="doneTitle">Contenimento locale registrato</h3>
+        <p>
+          <strong>SERVER01‑SHARE</strong> risulta disconnesso dalla dorsale e gli uplink del segmento VLAN‑12 verso questo host
+          sono in stato <strong>BLK</strong>. Da questo percorso il malware non riceve più traffico verso lo storage della condivisione;
+          su altre postazioni o verso uscite esterne l’attività malevola può proseguire — <span style="color:var(--ye);">l’incidente resta aperto</span>.
+        </p>
+        <p style="margin-bottom:0;font-size:.8rem;color:var(--mu);font-family:var(--mo);">
+          INC‑2024‑0312 · contenimento locale · segmento SERVER01‑SHARE / VLAN‑12
+        </p>
+        <div class="done-actions">
+          <button type="button" class="btn-strip" id="btnBack" style="width:100%;max-width:320px;background:var(--ac);margin:0 auto;">
+            Chiudi e torna all’incidente
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../backend/cyberdrill-lab-clock.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

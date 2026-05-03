@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberDrill — SC4: isolamento SERVER‑ERP</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="badge">INC‑2024‑0312 · Meridian · isolamento SERVER‑ERP</div>
+      <h1>SERVER‑ERP · <em>air‑gap logico sotto pressione</em></h1>
+      <p class="lead">
+        I quadri operativi mostrano SAP ancora raggiungibile dal segmento pubblicato, mentre sulla LAN la minaccia si avvicina al gestionale.
+        Staccare questo nodo dalla rete <strong>interrompe la propagazione verso l’ERP</strong> ma blocca gli accessi utente a SAP
+        finché non si dispone diversamente — l’effetto sul business è voluto e accettato. L’incidente nel suo complesso resta aperto.
+      </p>
+
+      <div class="ticker" id="ticker" aria-live="polite"></div>
+
+      <div class="two-col">
+        <div>
+          <h2 style="font-family:var(--mo);font-size:.62rem;letter-spacing:.14em;color:var(--mu);text-transform:uppercase;margin-bottom:.75rem;">Monitoraggio operativo (nodo pubblicato sulla rete)</h2>
+
+          <div class="dashboard-grid" id="dashGrid">
+            <article class="mirror-card alive-pulse" id="mirror-sap">
+              <div class="mc-label">Disponibilità servizio SAP</div>
+              <div class="mc-value" id="val-sap">99.22%</div>
+              <div class="mc-sub" id="sub-sap">SLA giornaliero · nodo SERVER-ERP</div>
+              <div class="spark-wrap">
+                <svg class="spark-svg" viewBox="0 0 120 44" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="sparkGradSap" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(61,214,140,0.45)" />
+                      <stop offset="100%" stop-color="rgba(61,214,140,0)" />
+                    </linearGradient>
+                  </defs>
+                  <path class="spark-fill" id="fill-sap" fill="url(#sparkGradSap)"></path>
+                  <path class="spark-line" id="line-sap"></path>
+                </svg>
+              </div>
+            </article>
+
+            <article class="mirror-card alive-pulse" id="mirror-sessioni">
+              <div class="mc-label">Sessioni GUI / RFC attive</div>
+              <div class="mc-value" id="val-sess">184</div>
+              <div class="mc-sub" id="sub-sess">Trend 15 min · reparti collegati</div>
+              <div class="spark-wrap">
+                <svg class="spark-svg" viewBox="0 0 120 44" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="sparkGradSess" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(61,214,140,0.4)" />
+                      <stop offset="100%" stop-color="rgba(61,214,140,0)" />
+                    </linearGradient>
+                  </defs>
+                  <path class="spark-fill" id="fill-sess" fill="url(#sparkGradSess)"></path>
+                  <path class="spark-line" id="line-sess"></path>
+                </svg>
+              </div>
+            </article>
+
+            <article class="mirror-card alive-pulse" id="mirror-ordini">
+              <div class="mc-label">Throughput ordini stimato</div>
+              <div class="mc-value" id="val-tp">847</div>
+              <div class="mc-sub" id="sub-tp">Unità logistiche confermate / ora</div>
+              <div class="bars-mini" aria-hidden="true">
+                <div class="bar-p" style="height:62%;"></div>
+                <div class="bar-p" style="height:82%;"></div>
+                <div class="bar-p" style="height:71%;"></div>
+                <div class="bar-p" style="height:90%;"></div>
+                <div class="bar-p" style="height:76%;"></div>
+              </div>
+            </article>
+
+            <article class="mirror-card alive-pulse" id="mirror-db">
+              <div class="mc-label">Carico sistema DB ERP</div>
+              <div class="mc-value" id="val-db">34%</div>
+              <div class="mc-sub" id="sub-db">Pool HANA · fascia operativa nominale</div>
+              <div class="spark-wrap">
+                <svg class="spark-svg" viewBox="0 0 120 44" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="sparkGradDb" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(61,214,140,0.38)" />
+                      <stop offset="100%" stop-color="rgba(61,214,140,0)" />
+                    </linearGradient>
+                  </defs>
+                  <path class="spark-fill" id="fill-db" fill="url(#sparkGradDb)"></path>
+                  <path class="spark-line" id="line-db"></path>
+                </svg>
+              </div>
+            </article>
+          </div>
+
+        </div>
+
+        <section class="panel" aria-labelledby="titIso">
+          <h2 id="titIso">Console di isolamento SERVER‑ERP</h2>
+
+          <div class="erp-vis">
+            <div class="erp-badge">
+              <span class="erp-dot">SAP</span>
+              SERVER-ERP · VLAN ERP-CORE<br />
+              <small style="color:var(--mu);margin-top:4px;display:block;">Traffico verso workstation, storage e WAN</small>
+            </div>
+
+            <svg class="links-svg" id="linksSvg" viewBox="0 0 340 118" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="rgba(61,214,140,0.9)" />
+                  <stop offset="100%" stop-color="rgba(74,159,232,0.5)" />
+                </linearGradient>
+              </defs>
+              <rect x="118" y="28" rx="8" ry="8" width="104" height="52" fill="#141a22" stroke="rgba(74,159,232,0.35)" stroke-width="1.5" />
+              <text x="170" y="58" fill="#8a93a8" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle">ERP</text>
+              <text x="170" y="72" fill="#6b7385" font-family="IBM Plex Mono, monospace" font-size="8" text-anchor="middle">192.168.40.11</text>
+              <!-- paths from left clients to ERP -->
+              <path class="link-path live" style="stroke: url(#lg1);" id="pathLan" d="M 24 92 C 72 92, 92 74, 118 54" stroke-dasharray="120" stroke-dashoffset="120"></path>
+              <path class="link-path live" style="stroke: url(#lg1);" id="pathSrv" d="M 52 42 C 90 52, 100 54, 118 54" stroke-dasharray="100" stroke-dashoffset="100"></path>
+              <path class="link-path live" style="stroke: rgba(232,80,58,0.35);" id="pathWan" d="M 316 92 C 270 92, 246 74, 222 54" stroke-dasharray="120" stroke-dashoffset="120"></path>
+              <circle cx="24" cy="92" r="6" fill="var(--s3)" stroke="var(--b2)" />
+              <circle cx="52" cy="42" r="6" fill="var(--s3)" stroke="var(--b2)" />
+              <circle cx="316" cy="92" r="6" fill="var(--s3)" stroke="var(--ac)" opacity="0.6" />
+              <text x="22" y="106" fill="var(--mu)" font-size="8" font-family="IBM Plex Mono, monospace">WS</text>
+              <text x="48" y="36" fill="var(--mu)" font-size="8" font-family="IBM Plex Mono, monospace">SHR</text>
+              <text x="300" y="106" fill="var(--mu)" font-size="8" font-family="IBM Plex Mono, monospace">WAN</text>
+            </svg>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="ackTradeoff" />
+            <span>Confermo che, isolando l’ERP, <strong>SAP non sarà più accessibile a livello aziendale</strong> fino alla revoca dell’isolamento, per impedire al ransomware di completare il percorso fino a questo host.</span>
+          </label>
+
+          <button type="button" class="btn-go" id="btnIsolate" disabled>Esegui isolamento logico (air‑gap) su SERVER‑ERP</button>
+
+          <div class="iso-log" id="isoLog"></div>
+        </section>
+      </div>
+    </div>
+
+    <div class="done-layer" id="doneLayer" aria-hidden="true">
+      <div class="done-card" role="dialog" aria-labelledby="doneTitle">
+        <h3 id="doneTitle">Isolamento SERVER‑ERP confermato</h3>
+        <p style="font-size:.88rem;color:#b8bcc8;line-height:1.55;margin-bottom:.6rem;">
+          Stato dopo l’isolamento logico impartito dalla console:
+        </p>
+        <ul>
+          <li class="li-up"><strong>Sistemi applicativi:</strong> interfaccia SAP e RFC non più raggiungibili dai segmenti che servivano questo nodo prima dell’isolamento; ordini e documenti in digitale restano in attesa fino a un ripristino controllato.</li>
+          <li class="li-down"><strong>Impatti operativi:</strong> fermata del gestionale per tutta la finestra di air‑gap — finanza e operations quantificano l’effetto sulla timeline dell’incidente nella sala gestione crisis.</li>
+          <li class="li-pro"><strong>Postura di sicurezza:</strong> SERVER‑ERP non espone più SMB/RPC verso host e segmenti considerati compromessi o a rischio sulla LAN — il rischio di cifratura del cluster gestionale si riduce in modo marcato.</li>
+        </ul>
+        <p style="font-size:.78rem;color:var(--mu);font-family:var(--mo);">INC‑2024‑0312 · registrazione intervento ERP</p>
+        <div class="done-actions">
+          <button type="button" class="btn-done" id="btnBack" style="flex:1;max-width:100%;">Chiudi e torna all’incidente</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../backend/cyberdrill-lab-clock.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
